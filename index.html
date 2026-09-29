@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hridoy AI — Image Generator</title>
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh; font-family:Arial,sans-serif;
+      background:radial-gradient(circle at top,#172554 0,#050816 45%,#02030a 100%);
+      color:#fff; display:flex; justify-content:center; padding:28px 14px;
+    }
+    .app{width:100%;max-width:720px}
+    .brand{text-align:center;margin:18px 0 24px}
+    .brand h1{margin:0;font-size:34px;letter-spacing:1px}
+    .brand p{color:#9ca3af;margin:8px 0 0}
+    .card{
+      background:rgba(15,23,42,.82); border:1px solid #26334f;
+      border-radius:22px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,.45);
+    }
+    textarea{
+      width:100%; min-height:120px; resize:vertical; border:1px solid #334155;
+      border-radius:15px; padding:15px; background:#070b16; color:#fff;
+      outline:none; font-size:16px;
+    }
+    textarea:focus{border-color:#38bdf8}
+    button{
+      width:100%; margin-top:13px; padding:15px; border:0; border-radius:14px;
+      background:linear-gradient(90deg,#2563eb,#06b6d4); color:#fff;
+      font-size:16px; font-weight:700; cursor:pointer;
+    }
+    button:disabled{opacity:.55;cursor:not-allowed}
+    .status{text-align:center;color:#94a3b8;min-height:24px;margin:14px 0}
+    .result{display:none;text-align:center}
+    .result img{width:100%;border-radius:18px;border:1px solid #334155}
+    .actions{display:flex;gap:10px}
+    .actions a{flex:1;text-decoration:none}
+    .secondary{background:#111827;border:1px solid #334155}
+    .note{font-size:12px;color:#64748b;text-align:center;margin-top:14px}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="brand">
+      <h1>⚡ HRIDOY AI</h1>
+      <p>AI Image Generator</p>
+    </div>
+
+    <section class="card">
+      <textarea id="prompt" placeholder="Describe your image...&#10;Example: cinematic blue gaming logo, dark background, neon aura"></textarea>
+      <button id="generate">✨ Generate Image</button>
+      <div class="status" id="status"></div>
+
+      <div class="result" id="result">
+        <img id="image" alt="Generated image">
+        <div class="actions">
+          <a id="open" target="_blank" rel="noopener">
+            <button class="secondary">Open Image</button>
+          </a>
+          <a id="download" download="hridoy-ai.png">
+            <button>Download</button>
+          </a>
+        </div>
+      </div>
+
+      <div class="note">Demo version — image generation uses a public image-generation endpoint.</div>
+    </section>
+  </main>
+
+<script>
+const promptBox = document.getElementById("prompt");
+const generate = document.getElementById("generate");
+const status = document.getElementById("status");
+const result = document.getElementById("result");
+const image = document.getElementById("image");
+const open = document.getElementById("open");
+const download = document.getElementById("download");
+
+generate.onclick = () => {
+  const prompt = promptBox.value.trim();
+  if (!prompt) {
+    status.textContent = "Write a prompt first 🙂";
+    return;
+  }
+
+  generate.disabled = true;
+  result.style.display = "none";
+  status.textContent = "Generating... please wait ⏳";
+
+  const seed = Math.floor(Math.random() * 1000000000);
+  const url =
+    "https://image.pollinations.ai/prompt/" +
+    encodeURIComponent(prompt) +
+    "?width=768&height=768&nologo=true&seed=" + seed;
+
+  image.onload = () => {
+    status.textContent = "Done! 🔥";
+    result.style.display = "block";
+    open.href = url;
+    download.href = url;
+    generate.disabled = false;
+  };
+
+  image.onerror = () => {
+    status.textContent = "Generation failed. Try another prompt.";
+    generate.disabled = false;
+  };
+
+  image.src = url;
+};
+</script>
+</body>
+</html>
