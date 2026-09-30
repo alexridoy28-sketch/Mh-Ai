@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hridoy AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#fff;background:linear-gradient(135deg,#080b16,#111936,#090d18);display:flex;justify-content:center;padding:25px 15px}.container{width:100%;max-width:700px}.logo{text-align:center;font-size:38px;font-weight:800;margin:25px 0 6px}.logo span{color:#8b6cff}.sub{text-align:center;color:#aeb7d0;margin-bottom:30px}.card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:22px;box-shadow:0 15px 50px rgba(0,0,0,.3)}label{display:block;margin-bottom:10px;font-weight:bold}textarea{width:100%;height:140px;resize:none;border:0;outline:0;border-radius:16px;padding:16px;background:#080d1d;color:white;font-size:16px}textarea::placeholder{color:#68738f}button{width:100%;margin-top:16px;padding:15px;border:0;border-radius:15px;background:linear-gradient(90deg,#6d4aff,#9b5cff);color:white;font-size:17px;font-weight:bold;cursor:pointer}.preview{margin-top:22px;min-height:220px;border-radius:18px;background:#080d1d;display:flex;align-items:center;justify-content:center;text-align:center;color:#8791ad;padding:20px}.footer{text-align:center;color:#707b98;margin-top:25px;font-size:13px}.badge{display:inline-block;margin:0 auto 20px;padding:7px 12px;border:1px solid rgba(255,255,255,.12);border-radius:99px;color:#bfc7df;font-size:12px}.center{text-align:center}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="center"><div class="badge">✨ AI IMAGE CREATOR</div></div>
+<div class="logo">Hridoy <span>AI</span></div>
+<div class="sub">Turn your ideas into amazing images</div>
+<div class="card">
+<label for="prompt">Describe your image</label>
+<textarea id="prompt" placeholder="Example: A cinematic sunset over the sea, ultra realistic..."></textarea>
+<button onclick="generate()">✨ Generate Image</button>
+<div class="preview" id="preview">Your generated image will appear here</div>
+</div>
+<div class="footer">© 2026 Hridoy AI • Made with ❤️</div>
+</div>
+<script>
+function generate(){
+const prompt=document.getElementById("prompt").value.trim();
+const preview=document.getElementById("preview");
+if(!prompt){preview.innerHTML="⚠️ Please write a prompt first.";return;}
+preview.innerHTML="✨ Prompt received!<br><br><b>"+escapeHtml(prompt)+"</b><br><br>Image generation will be connected next.";
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+</script>
+</body>
+</html>
